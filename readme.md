@@ -1,4 +1,4 @@
-# Projeto Final Luna Oliveira- Synesthesia como arte
+# Projeto Final Luna Oliveira- Sinestesia como arte
 ***Conceito***
 
 Para o projeto quis recriar a experiência da Sinestesia, fenómeno em que se associam cores, formas, padrões ou movimentos a cada som ou vibração.
