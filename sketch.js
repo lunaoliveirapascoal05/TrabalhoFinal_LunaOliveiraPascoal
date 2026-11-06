@@ -13,9 +13,8 @@ function setup() {
   fft = new p5.FFT(); // cria o sistema para analisar o som
   fft.setInput(mic); // define o microfone como entrada do sistema de análise de som
 
-  micButton = createButton('turn on microphone').position(20, 20).style("font-size", "20px").mousePressed(toggleMic); // botão que liga ou desliga o microfone
-document.body.style,font = "14" + getComputedStyle(micButton.elt).fontFamily; //fonte e tamanho do texto do botão
-
+  micButton = createButton("turn on microphone").position(20, 20).mousePressed(toggleMic); // botão que liga ou desliga o microfone
+  document.body.style.font = "14px " + getComputedStyle(micButton.elt).fontFamily; // fonte e tamanho do texto do botão
 
 }
 
@@ -26,6 +25,20 @@ background(255, 182, 217);
 image(layer, 0, 0); // desenha a camada na tela
 }
 
+function toggleMic() {
+  userStartAudio(); // permite o uso do microfone
+  if (micOn === false) {
+    micOn = true; // microfone estava desligado: então liga
+    mic.start();
+    micButton.html("turn off microphone"); // o texto diz que o microfone está ligado e pode ser desligado
+  }
+
+  else{
+    micOn = false; // microfone estava ligado: então desliga
+    mic.stop(); 
+    micButton.html("turn on microphone"); // texto do botão indica que o microfone pode ser ligado
+  }
+}
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
 }
