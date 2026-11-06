@@ -1,3 +1,4 @@
+let vol = 0; // volume da voz
 let layer; // criação de camada para desenhar
 let mic, fft, micButton; // microfone, sistema para analisar o som e botão para ativar ou desativar o microfone
 let micOn = false; // microfone está desligado ou ligado
@@ -38,7 +39,21 @@ function toggleMic() {
     mic.stop(); 
     micButton.html("turn on microphone"); // texto do botão indica que o microfone pode ser ligado
   }
+
+  if (micOn) {
+    vol = mic.getLevel(); //volume de 0 a 1 
+  }
+  else {
+   vol = 0; //volume 0 = desligado
+  }
+
+  if (vol >= 0.01) { //desenha quando microfone está ligado e há som
+    layer.fill(255,150);
+    layer.circle(width / 2, height / 2, 1 + vol * 60); // voz alta genera círculos grandes
+    
+  }
 }
+
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
 }
