@@ -1,10 +1,9 @@
-
+let mic, fft, micButton, lineColor, bgColor, speedSlider; // microfone, sistema para analisar o som e botão para ativar ou desativar o microfone
 let count = 5; // quantas bolinhas andam de 1 a 5
 let dots = 0; // 0 bolinhas = ainda não há ao iniciar o site 
 let speed = 3; // velocidade que ao iniciar
 let vol = 0; // volume da voz
 let layer; // criação de camada para desenhar
-let mic, fft, micButton; // microfone, sistema para analisar o som e botão para ativar ou desativar o microfone
 let micOn = false; // microfone está desligado ou ligado
 
 function setup() {
@@ -21,28 +20,31 @@ function setup() {
   micButton = createButton("turn on microphone").position(20, 20).mousePressed(toggleMic); // botão que liga ou desliga o microfone
   document.body.style.font = "14px " + getComputedStyle(micButton.elt).fontFamily; // fonte e tamanho do texto do botão
 
+  //salva o desenho criado clicando no botão save image
+  createButton("save image").position(20,55).mousePressed(saveImage);
+  //limpa a tela clicando no botão clear
+  createButton("clear").position(20,90).mousePressed(clearDrawing);
+
+  //cria um color picker para se poder escolher a cor da linha que começa branca
+  createSpan("line color").position(20,135);
+  lineColor = createColorPicker ("#FFFFFF").position(20, 155);
+
+  //cria um color picker para se escolher a cor do fundo que começa rosa
+  createSpan("background color").position(20, 200);
+  bgColor = createColorPicker("#FFB6D9").position(20, 220);
+
+  //cria um slider para se escolher a velocidade da criação das bolinhas conforme o som
+  createSpan("speed").position(20, 265);
+  speedSlider = createSlider(1, 10, 3, 0.5).position(20, 285);
+
 }
 
 function draw() {
 
-background(255, 182, 217);
-
+background(bgColor.value()); //pinta o fundo da cor que o color picker indicar
 image(layer, 0, 0); // desenha a camada na tela
 }
 
-function toggleMic() {
-  userStartAudio(); // permite o uso do microfone
-  if (micOn === false) {
-    micOn = true; // microfone estava desligado: então liga
-    mic.start();
-    micButton.html("turn off microphone"); // o texto diz que o microfone está ligado e pode ser desligado
-  }
-
-  else{
-    micOn = false; // microfone estava ligado: então desliga
-    mic.stop(); 
-    micButton.html("turn on microphone"); // texto do botão indica que o microfone pode ser ligado
-  }
 
   if (micOn) {
     vol = mic.getLevel(); //volume de 0 a 1 
@@ -66,8 +68,8 @@ function toggleMic() {
   }
 
   fft.analyze(); //analisa o som no preciso momento que se ativa o microfone
-  speed = 3 * map(fft.getCentroid(), 100, 4000, 0.6, 2, true); //converte o tom da voz numa velocidade
-  layer.fill(255,150); //cor com opacidade menor das bolinhas
+  speed = speedSlider.value() * map(fft.getCentroid(), 100, 4000, 0.6, 2, true); //converte o tom da voz numa velocidade
+  layer.fill(lineColor.value() + "96"); //cor com opacidade "96" deixa transparência nas bolinhas
  
   //5 bolinhas a serem desenhadas
   moveDot(dots[0]);
@@ -78,7 +80,21 @@ function toggleMic() {
   if (count > 4) moveDot(dots[4]);
  }
 
+function toggleMic() {
+  userStartAudio(); // permite o uso do microfone
+  if (micOn === false) {
+    micOn = true; // microfone estava desligado: então liga
+    mic.start();
+    micButton.html("turn off microphone"); // o texto diz que o microfone está ligado e pode ser desligado
+  }
 
+  else{
+    micOn = false; // microfone estava ligado: então desliga
+    mic.stop(); 
+    micButton.html("turn on microphone"); // texto do botão indica que o microfone pode ser ligado
+  }
+
+  
  function newDot(x, y, angle) { // cria uma bolinha, recebendo as coordenadas e enviando de volta já pronta
   return { x: x, y: y, angle: angle + random(-0.03, 0.3) }; //devolve a bolinha com as 3 informações (x, y e angle), o random faz com que as bolinhas se vão separando apesar de "nascerem" no mesmo ponto
  }
@@ -104,6 +120,13 @@ function toggleMic() {
  }
 }
 
+function saveImage() {
+  saveCanvas("synesthesia", "png"); //guarda o desenho feito como png 
+}
+
+function clearDrawing() {
+  layer.clear(); //limpa a página para se conseguir fazer outro desenho
+}
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
 }
