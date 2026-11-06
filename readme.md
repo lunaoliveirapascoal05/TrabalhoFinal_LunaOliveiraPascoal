@@ -3,6 +3,10 @@
 
 Para o projeto quis recriar a experiência da Sinestesia, fenómeno em que se associam cores, formas, padrões ou movimentos a cada som ou vibração.
 
+Para desenvolver o código usei o AI Claude.
+As decisões estéticas, mudanças de planos e conceito foram definidos por mim.
+Adicionei comentários no código para compreender a lógica das linhas conforme ia fazendo e alterando.
+
 
 ***Ingredientes***
 
@@ -15,9 +19,6 @@ Para a expressão utilizei a relação do som com a imagem, animações generati
 
 O png dos desenhos gerados pode criar o design do exterior do dispensador de fita-cola, mas também funciona como projeto pessoal, é interessante e permite aplicar estes desenhos em vários contextos.
 
-Para desenvolver o código usei o AI Claude.
-As decisões estéticas, mudanças de planos e conceito foram definidos por mim.
-Adicionei comentários no código para compreender a lógica das linhas conforme ia fazendo e alterando.
 
 
 ***Referências usadas:***
