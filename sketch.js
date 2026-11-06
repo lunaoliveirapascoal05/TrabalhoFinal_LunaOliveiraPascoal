@@ -1,10 +1,12 @@
 function setup() {
-  createCanvas(windowWidth, windowHeight);
-  background(255, 45, 200);
+  createCanvas(windowWidth, windowHeight).style("display", "block");
+  document.body.style.margin = 0; //tira a borda branca da tela
+  
 }
 
 function draw() {
-  circle(mouseX, mouseY, 60);
+
+background(255, 182, 217);
 }
 
 function windowResized() {
