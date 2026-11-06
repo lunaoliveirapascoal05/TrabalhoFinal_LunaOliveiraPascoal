@@ -67,6 +67,30 @@ function toggleMic() {
   moveDot(dots[0]);
  }
 
+
+ function newDot(x, y, angle) { // cria uma bolinha, recebendo as coordenadas e enviando de volta já pronta
+  return { x: x, y: y, angle: angle + random(-0.03, 0.3) }; //devolve a bolinha com as 3 informações (x, y e angle), o random faz com que as bolinhas se vão separando apesar de "nascerem" no mesmo ponto
+ }
+
+ function moveDot(dot) {
+  //o noise() dá um número de 0 a 1 que muda lentamente, que faz com que as curvas sejam suaves, e os números controlam a direção, força da curva e ângulo da curva das bolinhas criadas
+  dot.angle += (noise(dot.x * 0.005, dot.y * 0.005, frameCount * 0.002) - 0.05) * 0.4;
+  //o cos() transforma o ângulo em movimento para a direita ou esquerda e o sin() para cima ou para baixo
+  //multiplica pela velocidade que determina se a bolinha anda mais devagar ou mais depressa
+  dot.x += cos(dot.angle) * speed;
+  dot.y += sin(dot.angle) * speed;
+
+  //se a bolinha passar da borda direita do ecrã (x > que a largura), então volta para a borda esquerda
+  if (dot.x > width) dot.x = 0;
+  //senão, se passou a borda esquerda do ecrã (x < que 0), aparece do lado direito
+  else if (dot.x < 0) dot.x = width;
+  //se passou a borda de baixo do ecrã, (y > que a altura), volta para a parte superior da tela (0)
+  if(dot.y > height) dot.y = 0;
+  //senão, se passou a borda de cima (y < que 0) aparece em baixo
+  else if (dot.y < 0) dot.y = height;
+ 
+  layer.circle(dot.x + random(-2, 2), dot.y + random (-2, 2), 1 + vol * 60);
+ }
 }
 
 function windowResized() {
