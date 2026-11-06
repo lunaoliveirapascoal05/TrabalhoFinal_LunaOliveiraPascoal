@@ -43,7 +43,7 @@ function draw() {
 
 background(bgColor.value()); //pinta o fundo da cor que o color picker indicar
 image(layer, 0, 0); // desenha a camada na tela
-}
+
 
 
   if (micOn) {
@@ -79,6 +79,7 @@ image(layer, 0, 0); // desenha a camada na tela
   if (count > 3) moveDot(dots[3]);
   if (count > 4) moveDot(dots[4]);
  }
+}
 
 function toggleMic() {
   userStartAudio(); // permite o uso do microfone
@@ -93,15 +94,15 @@ function toggleMic() {
     mic.stop(); 
     micButton.html("turn on microphone"); // texto do botão indica que o microfone pode ser ligado
   }
+}
 
-  
  function newDot(x, y, angle) { // cria uma bolinha, recebendo as coordenadas e enviando de volta já pronta
-  return { x: x, y: y, angle: angle + random(-0.03, 0.3) }; //devolve a bolinha com as 3 informações (x, y e angle), o random faz com que as bolinhas se vão separando apesar de "nascerem" no mesmo ponto
+  return { x: x, y: y, angle: angle + random(-0.3, 0.3) }; //devolve a bolinha com as 3 informações (x, y e angle), o random faz com que as bolinhas se vão separando apesar de "nascerem" no mesmo ponto
  }
 
  function moveDot(dot) {
   //o noise() dá um número de 0 a 1 que muda lentamente, que faz com que as curvas sejam suaves, e os números controlam a direção, força da curva e ângulo da curva das bolinhas criadas
-  dot.angle += (noise(dot.x * 0.005, dot.y * 0.005, frameCount * 0.002) - 0.05) * 0.4;
+  dot.angle += (noise(dot.x * 0.005, dot.y * 0.005, frameCount * 0.002) - 0.5) * 0.4;
   //o cos() transforma o ângulo em movimento para a direita ou esquerda e o sin() para cima ou para baixo
   //multiplica pela velocidade que determina se a bolinha anda mais devagar ou mais depressa
   dot.x += cos(dot.angle) * speed;
@@ -118,7 +119,7 @@ function toggleMic() {
  
   layer.circle(dot.x + random(-2, 2), dot.y + random (-2, 2), 1 + vol * 60);
  }
-}
+
 
 function saveImage() {
   saveCanvas("synesthesia", "png"); //guarda o desenho feito como png 
