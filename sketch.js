@@ -1,3 +1,7 @@
+
+
+let dots = 0; // 0 bolinhas = ainda não há ao iniciar o site 
+let speed = 3; // velocidade que ao iniciar
 let vol = 0; // volume da voz
 let layer; // criação de camada para desenhar
 let mic, fft, micButton; // microfone, sistema para analisar o som e botão para ativar ou desativar o microfone
@@ -47,11 +51,22 @@ function toggleMic() {
    vol = 0; //volume 0 = desligado
   }
 
-  if (vol >= 0.01) { //desenha quando microfone está ligado e há som
-    layer.fill(255,150);
-    layer.circle(width / 2, height / 2, 1 + vol * 60); // voz alta genera círculos grandes
-    
+ if (vol < 0.01) {
+  dots = 0; //silêncio: não faz bolinhas
+ } 
+
+ else{
+  if (dots === 0) { //barulho: cria bolinhas
+    //sitios aleatórios do começo das formas generativas
+    let x = random (width); 
+    let y = random (height);
+    let angle = random(TWO_PI); // o random Two Pi pode dar qualquer direção aleatória: cima, baixo, direita, esquerda e diagonal
+    dots = [newDot(x, y, angle), newDot(x, y, angle), newDot(x, y, angle), newDot(x, y, angle), newDot(x, y, angle)]; // cria 5 bolinhas que são guardadas numa "caixa" ([]) e ao andarem, elas vão se espalhando e criam 5 linhas diferentes
   }
+  layer.fill(255,150); //cor com opacidade menor das bolinhas
+  moveDot(dots[0]);
+ }
+
 }
 
 function windowResized() {
