@@ -1,5 +1,5 @@
 
-
+let count = 5; // quantas bolinhas andam de 1 a 5
 let dots = 0; // 0 bolinhas = ainda não há ao iniciar o site 
 let speed = 3; // velocidade que ao iniciar
 let vol = 0; // volume da voz
@@ -61,10 +61,21 @@ function toggleMic() {
     let x = random (width); 
     let y = random (height);
     let angle = random(TWO_PI); // o random Two Pi pode dar qualquer direção aleatória: cima, baixo, direita, esquerda e diagonal
+    count = floor(random(1, 6));
     dots = [newDot(x, y, angle), newDot(x, y, angle), newDot(x, y, angle), newDot(x, y, angle), newDot(x, y, angle)]; // cria 5 bolinhas que são guardadas numa "caixa" ([]) e ao andarem, elas vão se espalhando e criam 5 linhas diferentes
   }
+
+  fft.analyze(); //analisa o som no preciso momento que se ativa o microfone
+  speed = 3 * map(fft.getCentroid(), 100, 4000, 0.6, 2, true); //converte o tom da voz numa velocidade
   layer.fill(255,150); //cor com opacidade menor das bolinhas
+ 
+  //5 bolinhas a serem desenhadas
   moveDot(dots[0]);
+
+  if (count > 1) moveDot(dots[1]);
+  if (count > 2) moveDot(dots[2]);
+  if (count > 3) moveDot(dots[3]);
+  if (count > 4) moveDot(dots[4]);
  }
 
 
